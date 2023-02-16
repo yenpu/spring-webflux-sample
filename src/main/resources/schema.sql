@@ -1,1 +1,1 @@
-CREATE TABLE account (id SERIAL PRIMARY KEY, first_name VARCHAR(255), last_name VARCHAR(255));
+CREATE TABLE account (id BIGINT AUTO_INCREMENT, first_name VARCHAR(255), last_name VARCHAR(255), primary key (id));

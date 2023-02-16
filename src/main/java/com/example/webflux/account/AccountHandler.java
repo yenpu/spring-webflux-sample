@@ -2,7 +2,6 @@ package com.example.webflux.account;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.server.HandlerFunction;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
@@ -23,4 +22,13 @@ public class AccountHandler {
                 .body(this.repository.findAll(), Account.class);
     }
 
+    public Mono<ServerResponse> create(final ServerRequest request) {
+        return request.bodyToMono(Account.class)
+                .flatMap(repository::save)
+                .map(acct -> repository.save(acct))
+                .flatMap(account -> ServerResponse
+                        .ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(account, Account.class));
+    }
 }
